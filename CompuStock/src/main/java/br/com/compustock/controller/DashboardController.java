@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DashboardController {
 
-    // Página do dashboard - Acessada após o login
+    // Página inicial do dashboard
     @GetMapping("/dashboard")
     public String dashboard() {
-        return "dashboard";  // Retorna a página do dashboard
+        return "dashboard";  // Página do dashboard
     }
 }
