@@ -29,7 +29,7 @@ public class ProdutoController {
     // Página de cadastro de produto
     @GetMapping("/novo")
     public String cadastrarProduto(Model model) {
-        model.addAttribute("fornecedores", fornecedorRepository.findAll());
+        model.addAttribute("fornecedores", fornecedorRepository.findAll()); // Carregar todos os fornecedores
         return "produto_form"; // Página de cadastro de produto
     }
 
@@ -43,7 +43,9 @@ public class ProdutoController {
         produto.setMarca(marca);
         produto.setPreco(preco);
         produto.setEstoque(estoque);
-        produto.setFornecedor(fornecedorRepository.findById(fornecedor_id).orElseThrow());
+        
+        // Garantir que o fornecedor esteja associado corretamente
+        produto.setFornecedor(fornecedorRepository.findById(fornecedor_id).orElseThrow()); 
 
         produtoRepository.save(produto); // Salva no banco de dados
         return "redirect:/dashboard/produtos"; // Redireciona para a página de listagem de produtos
@@ -54,7 +56,7 @@ public class ProdutoController {
     public String editarProduto(@PathVariable Long id, Model model) {
         Produto produto = produtoRepository.findById(id).orElseThrow();
         model.addAttribute("produto", produto);
-        model.addAttribute("fornecedores", fornecedorRepository.findAll());
+        model.addAttribute("fornecedores", fornecedorRepository.findAll()); // Carregar fornecedores para edição
         return "produto_form"; // Página de edição de produto
     }
 
@@ -68,6 +70,8 @@ public class ProdutoController {
         produto.setMarca(marca);
         produto.setPreco(preco);
         produto.setEstoque(estoque);
+        
+        // Atualiza o fornecedor associado
         produto.setFornecedor(fornecedorRepository.findById(fornecedor_id).orElseThrow());
 
         produtoRepository.save(produto); // Atualiza no banco de dados

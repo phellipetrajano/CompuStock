@@ -65,8 +65,10 @@
         <label for="fornecedor_id">Fornecedor:</label>
         <select id="fornecedor_id" name="fornecedor_id" required>
             <option value="">Selecione o Fornecedor</option>
-            <!-- As opções de fornecedores serão preenchidas dinamicamente -->
-            <option value="1">Tech Supplies Ltda</option> <!-- Exemplo de fornecedor -->
+            <!-- Preenchido dinamicamente -->
+            <option th:each="fornecedor : ${fornecedores}" 
+                    th:value="${fornecedor.id}" 
+                    th:text="${fornecedor.nome}"></option>
         </select>
 
         <button type="submit">Cadastrar</button>

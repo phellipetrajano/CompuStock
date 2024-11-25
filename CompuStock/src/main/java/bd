@@ -1,30 +1,47 @@
+-- Criação do Banco de Dados
 CREATE DATABASE compustock;
 
 USE compustock;
 
--- Tabela de Produtos
-CREATE TABLE produto (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    marca VARCHAR(255) NOT NULL,
-    preco DECIMAL(10, 2) NOT NULL,
-    estoque INT NOT NULL,
-    fornecedor_id INT,
-    FOREIGN KEY (fornecedor_id) REFERENCES fornecedor(id)
-);
-
 -- Tabela de Funcionários
 CREATE TABLE funcionario (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,  -- Usando BIGINT para compatibilidade
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,  -- Senha sem criptografia por enquanto
     telefone VARCHAR(20)
 );
 
 -- Tabela de Fornecedores
 CREATE TABLE fornecedor (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,  -- Usando BIGINT para compatibilidade
     nome VARCHAR(255) NOT NULL,
+    cnpj VARCHAR(18) NOT NULL UNIQUE,  -- CNPJ do fornecedor
     email VARCHAR(255) NOT NULL,
     telefone VARCHAR(20)
 );
+
+-- Tabela de Produtos
+CREATE TABLE produto (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,  -- Usando BIGINT para compatibilidade
+    nome VARCHAR(255) NOT NULL,
+    marca VARCHAR(255) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    estoque INT NOT NULL,
+    fornecedor_id BIGINT,
+    FOREIGN KEY (fornecedor_id) REFERENCES fornecedor(id) ON DELETE CASCADE
+);
+
+-- Inserindo exemplo de dados na tabela de Funcionários
+INSERT INTO funcionario (nome, email, senha, telefone) 
+VALUES ('João Silva', 'joao.silva@example.com', '1234', '11987654321');
+
+-- Inserindo exemplo de dados na tabela de Fornecedores
+INSERT INTO fornecedor (nome, cnpj, email, telefone)
+VALUES ('Tech Supplies Ltda', '12.345.678/0001-90', 'contato@techsupplies.com.br', '1122334455');
+
+-- Inserindo exemplo de dados na tabela de Produtos
+INSERT INTO produto (nome, marca, preco, estoque, fornecedor_id) 
+VALUES ('Notebook Dell', 'Dell', 2500.00, 10, 1),
+       ('Teclado Mecânico', 'Corsair', 400.00, 50, 1),
+       ('Mouse Logitech', 'Logitech', 150.00, 100, 1);
