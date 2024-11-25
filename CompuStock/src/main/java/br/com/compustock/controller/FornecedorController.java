@@ -18,13 +18,14 @@ public class FornecedorController {
     // Página de listagem de fornecedores
     @GetMapping
     public String listarFornecedores(Model model) {
-        model.addAttribute("fornecedores", fornecedorRepository.findAll());
+        model.addAttribute("fornecedores", fornecedorRepository.findAll()); // Passa a lista de fornecedores para a view
         return "fornecedores"; // Página de listagem de fornecedores
     }
 
     // Página de cadastro de fornecedor
     @GetMapping("/novo")
-    public String cadastrarFornecedor() {
+    public String cadastrarFornecedor(Model model) {
+        model.addAttribute("fornecedor", new Fornecedor()); // Passa um objeto fornecedor vazio para a view
         return "fornecedor_form"; // Página de cadastro de fornecedor
     }
 
@@ -32,10 +33,19 @@ public class FornecedorController {
     @PostMapping
     public String salvarFornecedor(@RequestParam String nome, @RequestParam String cnpj, 
                                    @RequestParam String email, @RequestParam String telefone) {
+        // Validação simples dos dados
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio");
+        }
+        if (cnpj == null || cnpj.isEmpty()) {
+            throw new IllegalArgumentException("CNPJ não pode ser vazio");
+        }
+
+        // Criação do fornecedor
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setNome(nome);
-        fornecedor.setCnpj(cnpj); // Salva o CNPJ
-        fornecedor.setEmail(email); // Salva o email
+        fornecedor.setCnpj(cnpj);
+        fornecedor.setEmail(email);
         fornecedor.setTelefone(telefone);
         
         fornecedorRepository.save(fornecedor); // Salva no banco de dados
@@ -45,8 +55,9 @@ public class FornecedorController {
     // Página de edição de fornecedor
     @GetMapping("/editar/{id}")
     public String editarFornecedor(@PathVariable Long id, Model model) {
-        Fornecedor fornecedor = fornecedorRepository.findById(id).orElseThrow();
-        model.addAttribute("fornecedor", fornecedor);
+        // Busca o fornecedor no banco, caso contrário lança uma exceção
+        Fornecedor fornecedor = fornecedorRepository.findById(id).orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"));
+        model.addAttribute("fornecedor", fornecedor); // Passa os dados do fornecedor para o form de edição
         return "fornecedor_form"; // Página de edição de fornecedor
     }
 
@@ -54,10 +65,19 @@ public class FornecedorController {
     @PostMapping("/editar/{id}")
     public String atualizarFornecedor(@PathVariable Long id, @RequestParam String nome, @RequestParam String cnpj,
                                       @RequestParam String email, @RequestParam String telefone) {
-        Fornecedor fornecedor = fornecedorRepository.findById(id).orElseThrow();
+        // Validação simples dos dados
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio");
+        }
+        if (cnpj == null || cnpj.isEmpty()) {
+            throw new IllegalArgumentException("CNPJ não pode ser vazio");
+        }
+
+        // Atualiza o fornecedor
+        Fornecedor fornecedor = fornecedorRepository.findById(id).orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"));
         fornecedor.setNome(nome);
-        fornecedor.setCnpj(cnpj); // Atualiza o CNPJ
-        fornecedor.setEmail(email); // Atualiza o email
+        fornecedor.setCnpj(cnpj);
+        fornecedor.setEmail(email);
         fornecedor.setTelefone(telefone);
 
         fornecedorRepository.save(fornecedor); // Atualiza no banco de dados
@@ -70,8 +90,7 @@ public class FornecedorController {
         try {
             fornecedorRepository.deleteById(id); // Deleta o fornecedor do banco de dados
         } catch (Exception e) {
-            // Se ocorrer um erro ao deletar, redireciona com erro
-            return "redirect:/dashboard/fornecedores?error=true"; // Redireciona para página com erro
+            return "redirect:/dashboard/fornecedores?error=true"; // Redireciona com erro se falhar
         }
         return "redirect:/dashboard/fornecedores"; // Redireciona para a página de listagem de fornecedores
     }

@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Funcionários</title>
+    <script>
+        function confirmarExclusao() {
+            return confirm("Você tem certeza que deseja excluir este funcionário?");
+        }
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,53 +20,75 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-        }
-        table th, table td {
             border: 1px solid #ddd;
+        }
+        th, td {
             padding: 10px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
-        table th {
-            background-color: #333;
-            color: white;
+        th {
+            background-color: #f2f2f2;
         }
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #ccc;
-            color: black;
+        a {
             text-decoration: none;
-            border-radius: 5px;
+            color: #333;
+            margin-right: 10px;
+        }
+        a:hover {
+            color: #007bff;
+        }
+        .btn {
+            padding: 8px 12px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #c82333;
+        }
+        .btn-cadastrar {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        .btn-cadastrar:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-    <h1>Funcionários</h1>
-    <a href="/dashboard/funcionarios/novo" class="add-btn">Adicionar Funcionário</a>
-    <a href="/dashboard/funcionarios" class="back-btn">Voltar</a> <!-- Botão de voltar -->
+    <h2>Funcionários</h2>
+
+    <!-- Botão de Cadastro de Funcionário -->
+    <a href="/dashboard/funcionarios/novo" class="btn-cadastrar">Cadastrar Funcionário</a>
+	<a href="/dashboard" class="back-btn">Voltar</a>
+
+    <!-- Tabela de Funcionários -->
     <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="funcionario : ${funcionarios}">
-                <td th:text="${funcionario.id}"></td>
-                <td th:text="${funcionario.nome}"></td>
-                <td th:text="${funcionario.email}"></td>
-                <td th:text="${funcionario.telefone}"></td>
-                <td>
-                    <a th:href="'/dashboard/funcionarios/editar/' + ${funcionario.id}" class="action-btn">Editar</a>
-                    <a th:href="'/dashboard/funcionarios/deletar/' + ${funcionario.id}" class="delete-btn">Excluir</a>
-                </td>
-            </tr>
-        </tbody>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+        <tr th:each="funcionario : ${funcionarios}">
+            <td th:text="${funcionario.nome}"></td>
+            <td th:text="${funcionario.email}"></td>
+            <td th:text="${funcionario.telefone}"></td>
+            <td>
+                <!-- Botão de Editar -->
+                <a href="/dashboard/funcionarios/editar/{id}" th:href="@{/dashboard/funcionarios/editar/{id}(id=${funcionario.id})}">Editar</a>
+                
+                <!-- Botão de Excluir -->
+                <a href="#" th:href="@{/dashboard/funcionarios/deletar/{id}(id=${funcionario.id})}" onclick="return confirmarExclusao()" class="btn">Excluir</a>
+            </td>
+        </tr>
     </table>
 </body>
 </html>

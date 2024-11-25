@@ -31,15 +31,15 @@ public class FuncionarioController {
     // Processa o cadastro do funcionário
     @PostMapping
     public String salvarFuncionario(@RequestParam String nome, @RequestParam String email, 
-                                    @RequestParam String senha, @RequestParam String telefone) {
+                                    @RequestParam String telefone, @RequestParam String senha) {
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(nome);
-        funcionario.setEmail(email); // Salva o email
-        funcionario.setSenha(senha); // Salva a senha sem criptografia
+        funcionario.setEmail(email);
         funcionario.setTelefone(telefone);
+        funcionario.setSenha(senha);
         
-        funcionarioRepository.save(funcionario); // Salva no banco de dados
-        return "redirect:/dashboard/funcionarios"; // Redireciona para a página de listagem de funcionários
+        funcionarioRepository.save(funcionario);
+        return "redirect:/dashboard/funcionarios";
     }
 
     // Página de edição de funcionário
@@ -50,24 +50,29 @@ public class FuncionarioController {
         return "funcionario_form"; // Página de edição de funcionário
     }
 
-    // Atualiza as informações de um funcionário
+    // Atualiza as informações do funcionário
     @PostMapping("/editar/{id}")
-    public String atualizarFuncionario(@PathVariable Long id, @RequestParam String nome, @RequestParam String email,
-                                       @RequestParam String senha, @RequestParam String telefone) {
+    public String atualizarFuncionario(@PathVariable Long id, @RequestParam String nome, 
+                                       @RequestParam String email, @RequestParam String telefone, 
+                                       @RequestParam String senha) {
         Funcionario funcionario = funcionarioRepository.findById(id).orElseThrow();
         funcionario.setNome(nome);
         funcionario.setEmail(email);
-        funcionario.setSenha(senha); // Atualiza a senha sem criptografia
         funcionario.setTelefone(telefone);
+        funcionario.setSenha(senha);
 
-        funcionarioRepository.save(funcionario); // Atualiza no banco de dados
-        return "redirect:/dashboard/funcionarios"; // Redireciona para a página de listagem de funcionários
+        funcionarioRepository.save(funcionario);
+        return "redirect:/dashboard/funcionarios";
     }
 
     // Deleta um funcionário
     @GetMapping("/deletar/{id}")
     public String deletarFuncionario(@PathVariable Long id) {
-        funcionarioRepository.deleteById(id); // Deleta o funcionário do banco de dados
-        return "redirect:/dashboard/funcionarios"; // Redireciona para a página de listagem de funcionários
+        try {
+            funcionarioRepository.deleteById(id);
+        } catch (Exception e) {
+            return "redirect:/dashboard/funcionarios?error=true";
+        }
+        return "redirect:/dashboard/funcionarios";
     }
 }

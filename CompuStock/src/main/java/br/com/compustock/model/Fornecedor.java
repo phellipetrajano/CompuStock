@@ -1,9 +1,9 @@
 package br.com.compustock.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
 public class Fornecedor {
@@ -13,13 +13,24 @@ public class Fornecedor {
     private Long id;
 
     private String nome;
-
-    private String cnpj;  // Novo campo CNPJ
-
+    private String cnpj;
     private String email;
     private String telefone;
 
-    // Getters and Setters
+    // Construtor vazio (necessário para o JPA)
+    public Fornecedor() {
+    }
+
+    // Construtor com parâmetros
+    public Fornecedor(String nome, String cnpj, String email, String telefone) {
+        this.nome = nome;
+        this.cnpj = cnpj;
+        this.email = email;
+        this.telefone = telefone;
+    }
+
+    // Getters e Setters
+
     public Long getId() {
         return id;
     }
@@ -58,5 +69,17 @@ public class Fornecedor {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    // Método toString() para facilitar a exibição dos dados do fornecedor
+    @Override
+    public String toString() {
+        return "Fornecedor{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cnpj='" + cnpj + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                '}';
     }
 }

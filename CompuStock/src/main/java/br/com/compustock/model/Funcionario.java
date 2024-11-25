@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Funcionario {
@@ -13,15 +14,24 @@ public class Funcionario {
     private Long id;
 
     private String nome;
-
-    private String email;  // Novo campo de email
-
-    private String senha;  // Novo campo de senha
-
+    private String email;
     private String telefone;
+    private String senha;
 
-    // Getters and Setters
+    // Construtor padrão
+    public Funcionario() {
+    }
 
+    // Construtor com parâmetros
+    public Funcionario(Long id, String nome, String email, String telefone, String senha) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+    }
+
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -46,6 +56,14 @@ public class Funcionario {
         this.email = email;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     public String getSenha() {
         return senha;
     }
@@ -54,11 +72,30 @@ public class Funcionario {
         this.senha = senha;
     }
 
-    public String getTelefone() {
-        return telefone;
+    // Método toString
+    @Override
+    public String toString() {
+        return "Funcionario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    // Método equals
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Funcionario that = (Funcionario) o;
+        return Objects.equals(id, that.id);
+    }
+
+    // Método hashCode
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

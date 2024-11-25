@@ -25,7 +25,7 @@
             background-color: #333;
             color: white;
         }
-        .back-btn {
+        .back-btn, .add-btn {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 15px;
@@ -34,12 +34,36 @@
             text-decoration: none;
             border-radius: 5px;
         }
+        .action-btn, .delete-btn {
+            margin-right: 10px;
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        .action-btn {
+            background-color: #007BFF;
+        }
+        .delete-btn {
+            background-color: #FF4D4D;
+        }
+        .action-btn:hover {
+            background-color: #0056b3;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
     </style>
+    <script>
+        function confirmarExclusao() {
+            return confirm("Tem certeza que deseja excluir este fornecedor?");
+        }
+    </script>
 </head>
 <body>
     <h1>Fornecedores</h1>
     <a href="/dashboard/fornecedores/novo" class="add-btn">Adicionar Fornecedor</a>
-    <a href="/dashboard/fornecedores" class="back-btn">Voltar</a> <!-- Botão de voltar -->
+    <a href="/dashboard" class="back-btn">Voltar</a>
     <table>
         <thead>
             <tr>
@@ -58,7 +82,8 @@
                 <td th:text="${fornecedor.telefone}"></td>
                 <td>
                     <a th:href="'/dashboard/fornecedores/editar/' + ${fornecedor.id}" class="action-btn">Editar</a>
-                    <a th:href="'/dashboard/fornecedores/deletar/' + ${fornecedor.id}" class="delete-btn">Excluir</a>
+                    <a href="#" th:href="@{/dashboard/fornecedores/deletar/{id}(id=${fornecedor.id})}" 
+                       onclick="return confirmarExclusao()" class="delete-btn">Excluir</a>
                 </td>
             </tr>
         </tbody>
