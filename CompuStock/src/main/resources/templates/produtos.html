@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #333;
+            color: white;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #ccc;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Produtos</h1>
+    <a href="/dashboard/produtos/novo" class="add-btn">Adicionar Produto</a>
+    <a href="/dashboard/produtos" class="back-btn">Voltar</a> <!-- Botão de voltar -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Marca</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Fornecedor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.id}"></td>
+                <td th:text="${produto.nome}"></td>
+                <td th:text="${produto.marca}"></td>
+                <td th:text="${produto.preco}"></td>
+                <td th:text="${produto.estoque}"></td>
+                <td th:text="${produto.fornecedor.nome}"></td>
+                <td>
+                    <a th:href="'/dashboard/produtos/editar/' + ${produto.id}" class="action-btn">Editar</a>
+                    <a th:href="'/dashboard/produtos/deletar/' + ${produto.id}" class="delete-btn">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
