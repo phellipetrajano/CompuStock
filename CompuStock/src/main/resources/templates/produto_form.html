@@ -3,106 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Produto</title>
+    <title>Editar Produto</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1b1f2a;
-            color: #f4f4f4;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
         form {
-            background-color: #252b38;
+            background-color: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            width: 400px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
         }
         form label {
             display: block;
             margin: 10px 0 5px;
-            color: #61dafb;
         }
         form input, form select {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #333;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #1b1f2a;
-            color: #f4f4f4;
         }
         form button {
             width: 100%;
             padding: 10px;
-            background-color: #61dafb;
-            color: #1b1f2a;
+            background-color: #333;
+            color: white;
             border: none;
             border-radius: 5px;
-            font-weight: bold;
             cursor: pointer;
         }
         form button:hover {
-            background-color: #41a1d1;
-        }
-        h2 {
-            text-align: center;
-            color: #61dafb;
+            background-color: #555;
         }
     </style>
 </head>
 <body>
-    <form action="/dashboard/produtos" method="post">
-        <h2>Cadastrar Produto</h2>
-        
+    <h2>Editar Produto</h2>
+    <form action="/dashboard/produtos/editar" method="post">
+        <input type="hidden" id="id" name="id" th:value="${produto.id}" />
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
+        <input type="text" id="nome" name="nome" th:value="${produto.nome}" required />
 
         <label for="marca">Marca:</label>
-        <select id="marca" name="marca" required>
-            <option value="">Selecione uma marca</option>
-            <option value="Apple">Apple</option>
-            <option value="Samsung">Samsung</option>
-            <option value="Microsoft">Microsoft</option>
-            <option value="Sony">Sony</option>
-            <option value="Dell">Dell</option>
-            <option value="HP">HP</option>
-            <option value="Lenovo">Lenovo</option>
-            <option value="Asus">Asus</option>
-            <option value="Acer">Acer</option>
-            <option value="Logitech">Logitech</option>
-        </select>
+        <input type="text" id="marca" name="marca" th:value="${produto.marca}" required />
 
         <label for="preco">Preço:</label>
-        <input type="number" id="preco" name="preco" step="0.01" required>
+        <input type="number" id="preco" name="preco" th:value="${produto.preco}" required />
 
         <label for="estoque">Estoque:</label>
-        <input type="number" id="estoque" name="estoque" required>
+        <input type="number" id="estoque" name="estoque" th:value="${produto.estoque}" required />
 
         <label for="descricao">Descrição:</label>
-        <select id="descricao" name="descricao" required>
-            <option value="">Selecione um produto</option>
-            <option value="Smartphone">Smartphone</option>
-            <option value="Laptop">Laptop</option>
-            <option value="Monitor">Monitor</option>
-            <option value="Mouse">Mouse</option>
-            <option value="Teclado">Teclado</option>
-            <option value="Fone de Ouvido">Fone de Ouvido</option>
-            <option value="Smartwatch">Smartwatch</option>
-            <option value="Impressora">Impressora</option>
-            <option value="Tablet">Tablet</option>
-            <option value="Placa de Vídeo">Placa de Vídeo</option>
-        </select>
+        <input type="text" id="descricao" name="descricao" th:value="${produto.descricao}" required />
 
         <label for="fornecedor_id">Fornecedor:</label>
         <select id="fornecedor_id" name="fornecedor_id" required>
             <option value="">Selecione o Fornecedor</option>
-            <option th:each="fornecedor : ${fornecedores}" th:value="${fornecedor.id}" th:text="${fornecedor.nome}"></option>
+            <option th:each="fornecedor : ${fornecedores}" th:value="${fornecedor.id}" th:text="${fornecedor.nome}" 
+                th:selected="${produto.fornecedor != null && fornecedor.id == produto.fornecedor.id}"></option>
         </select>
 
         <button type="submit">Confirmar</button>
