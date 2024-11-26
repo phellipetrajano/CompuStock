@@ -6,52 +6,59 @@
     <title>Dashboard</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 1rem;
+            background-color: #1b1f2a;
+            color: #f4f4f4;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            height: 100vh;
         }
-        header h1 {
-            margin: 0;
-        }
-        main {
+        .dashboard {
+            text-align: center;
+            background-color: #252b38;
             padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 400px;
         }
-        nav a {
+        .dashboard h1 {
+            color: #61dafb;
+            margin-bottom: 20px;
+        }
+        .dashboard a {
             display: block;
             margin: 10px 0;
-            color: #333;
+            padding: 10px;
+            background-color: #61dafb;
+            color: #1b1f2a;
             text-decoration: none;
-            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        nav a:hover {
-            text-decoration: underline;
+        .dashboard a:hover {
+            background-color: #41a1d1;
         }
         .logout {
-            color: red;
             margin-top: 20px;
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .logout:hover {
+            background-color: #cc0000;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Dashboard</h1>
+    <div class="dashboard">
+        <h1>Gerenciamento</h1>
+        <a href="/dashboard/produtos">Gerenciar Produtos</a>
+        <a href="/dashboard/funcionarios">Gerenciar Funcionários</a>
+        <a href="/dashboard/fornecedores">Gerenciar Fornecedores</a>
         <a href="/" class="logout">Logout</a>
-    </header>
-    <main>
-        <nav>
-            <a href="/dashboard/produtos">Gerenciar Produtos</a>
-            <a href="/dashboard/funcionarios">Gerenciar Funcionários</a>
-            <a href="/dashboard/fornecedores">Gerenciar Fornecedores</a>
-        </nav>
-    </main>
+    </div>
 </body>
 </html>

@@ -6,37 +6,57 @@
     <title>CompuStock</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #1b1f2a;
+            color: #f4f4f4;
         }
         header {
             background-color: #333;
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: #61dafb;
+            padding: 20px;
+            text-align: center;
         }
         header h1 {
             margin: 0;
         }
         .btn-login {
-            background-color: white;
-            color: #333;
-            border: none;
+            background-color: #61dafb;
+            color: #1b1f2a;
             padding: 10px 15px;
-            cursor: pointer;
+            border-radius: 5px;
             text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .btn-login:hover {
+            background-color: #41a1d1;
         }
         main {
             text-align: center;
-            margin-top: 50px;
+            margin: 50px auto;
+            max-width: 800px;
+        }
+        main h2 {
+            color: #61dafb;
+        }
+        main p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .social-icons {
+            margin: 20px auto;
         }
         .social-icons img {
             width: 40px;
-            margin: 10px;
+            margin: 0 10px;
+            transition: transform 0.3s;
+        }
+        .social-icons img:hover {
+            transform: scale(1.2);
         }
     </style>
 </head>
@@ -47,11 +67,20 @@
     </header>
     <main>
         <h2>Bem-vindo ao CompuStock</h2>
+        <p>
+            A <strong>CompuStock</strong> é uma empresa especializada em gerenciamento de estoque de produtos tecnológicos. 
+            Com um sistema eficiente e inovador, ajudamos empresas a monitorar, organizar e otimizar seus estoques de forma prática e intuitiva.
+        </p>
+        <p>
+            Nosso objetivo é proporcionar soluções que simplifiquem o dia a dia de gestores e colaboradores, garantindo 
+            que cada item seja monitorado de forma eficiente e transparente. Com anos de experiência no setor tecnológico, 
+            estamos comprometidos em oferecer um serviço de qualidade e confiável.
+        </p>
         <div class="social-icons">
-            <a href="#"><img src="/img/instagram.png" alt="Instagram"></a>
-            <a href="#"><img src="/img/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="/img/x.png" alt="X"></a>
-            <a href="#"><img src="/img/whatsapp.png" alt="WhatsApp"></a>
+            <a href="#"><img src="/imagens/instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="/imagens/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="/imagens/x.png" alt="X"></a>
+            <a href="#"><img src="/imagnes/whatsapp.png" alt="WhatsApp"></a>
         </div>
     </main>
 </body>
