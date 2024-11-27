@@ -4,12 +4,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
-@Entity
-public class Funcionario {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-    @Id
+@Entity
+public class Funcionario implements Serializable,UserDetails {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -30,8 +45,24 @@ public class Funcionario {
         this.telefone = telefone;
         this.senha = senha;
     }
+    
+    @ManyToMany
+	@JoinTable(name="funcionario_permissao",
+    joinColumns={@JoinColumn(name="idfuncionariopermissao", referencedColumnName = "id")},
+    inverseJoinColumns={@JoinColumn(name="idpermissao", referencedColumnName = "idpermissao")})
+	private List<Permissao> permissoes;
+    
+    
 
-    // Getters e Setters
+    public List<Permissao> getPermissoes() {
+		return permissoes;
+	}
+
+	public void setPermissoes(List<Permissao> permissoes) {
+		this.permissoes = permissoes;
+	}
+
+	// Getters e Setters
     public Long getId() {
         return id;
     }
@@ -98,4 +129,22 @@ public class Funcionario {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return (Collection<? extends GrantedAuthority>) this.permissoes;
+
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub	   
+		return this.senha;
+	   
+	}
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+}
 }

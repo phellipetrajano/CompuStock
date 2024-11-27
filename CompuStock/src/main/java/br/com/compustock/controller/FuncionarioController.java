@@ -3,6 +3,7 @@ package br.com.compustock.controller;
 import br.com.compustock.model.Funcionario;
 import br.com.compustock.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -41,6 +42,8 @@ public class FuncionarioController {
 
     @PostMapping("/editar")
     public String atualizarFuncionario(@ModelAttribute Funcionario funcionario) {
+    	BCryptPasswordEncoder b = new BCryptPasswordEncoder();
+    	funcionario.setSenha(b.encode(funcionario.getSenha()));
         funcionarioRepository.save(funcionario); // Atualiza diretamente
         return "redirect:/dashboard/funcionarios";
     }
