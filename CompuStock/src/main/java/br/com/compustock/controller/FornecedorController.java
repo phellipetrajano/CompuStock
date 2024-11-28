@@ -23,7 +23,7 @@ public class FornecedorController {
     @GetMapping("/fornecedores/novo")
     public String cadastrarFornecedor(Model model) {
         model.addAttribute("fornecedor", new Fornecedor());
-        return "fornecedor_form";
+        return "fornecedores_form";
     }
 
     @PostMapping("/fornecedores/novo")
