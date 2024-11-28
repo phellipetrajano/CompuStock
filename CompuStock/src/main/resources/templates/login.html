@@ -63,7 +63,7 @@
     </style>
 </head>
 <body>
-    <form action="/login" method="post">
+    <form th:action="@{/login}" method="post">
         <h2>Login</h2>
         <!-- Mensagem de erro caso o login falhe -->
         <div th:if="${param.error}" class="error">Credenciais inválidas. Tente novamente.</div>

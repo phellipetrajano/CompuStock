@@ -47,15 +47,25 @@
             font-size: 18px;
             line-height: 1.6;
         }
+        a {
+            text-decoration: none;
+            color: black;
+        }
         .social-icons {
             margin: 20px auto;
         }
-        .social-icons img {
+        .social-icons a {
             width: 40px;
-            margin: 0 10px;
+            height: 40px;
+            display: inline-block;
             transition: transform 0.3s;
+            padding: 5px;
         }
-        .social-icons img:hover {
+        .social-icons img {
+            width: 100%;
+            height: auto;
+        }
+        .social-icons a:hover {
             transform: scale(1.2);
         }
     </style>
@@ -63,7 +73,7 @@
 <body>
     <header>
         <h1>CompuStock</h1>
-        <a href="/login" class="btn-login">Login</a>
+        <a href="login.html" class="btn-login">Login</a>
     </header>
     <main>
         <h2>Bem-vindo ao CompuStock</h2>
@@ -77,10 +87,18 @@
             estamos comprometidos em oferecer um serviço de qualidade e confiável.
         </p>
         <div class="social-icons">
-            <a href="#"><img src="/imagens/instagram.png" alt="Instagram"></a>
-            <a href="#"><img src="/imagens/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="/imagens/x.png" alt="X"></a>
-            <a href="#"><img src="/imagnes/whatsapp.png" alt="WhatsApp"></a>
+            <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+            </a>
+            <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+            </a>
+            <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/X_icon_2.svg" alt="Twitter">
+            </a>
+            <a href="https://wa.me/your-number" target="_blank" aria-label="WhatsApp">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            </a>
         </div>
     </main>
 </body>

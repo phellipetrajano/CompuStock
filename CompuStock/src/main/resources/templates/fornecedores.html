@@ -76,7 +76,7 @@
         <h1>Fornecedores</h1>
     </header>
     <div style="text-align: center;">
-        <a href="/dashboard/fornecedores/novo" class="btn">Adicionar Fornecedor</a>
+        <a href="/fornecedores/novo" class="btn">Adicionar Fornecedor</a>
         <a href="/dashboard" class="btn">Voltar</a>
     </div>
     <table>
@@ -96,8 +96,8 @@
                 <td th:text="${fornecedor.email}"></td>
                 <td th:text="${fornecedor.telefone}"></td>
                 <td class="actions">
-                    <a th:href="@{/dashboard/fornecedores/editar/{id}(id=${fornecedor.id})}">Editar</a>
-                    <a th:href="@{/dashboard/fornecedores/deletar/{id}(id=${fornecedor.id})}" class="delete-btn" onclick="return confirmarExclusao()">Excluir</a>
+                    <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}">Editar</a>
+                    <a th:href="@{/fornecedores/deletar/{id}(id=${fornecedor.id})}" class="delete-btn" onclick="return confirmarExclusao()">Excluir</a>
                 </td>
             </tr>
         </tbody>

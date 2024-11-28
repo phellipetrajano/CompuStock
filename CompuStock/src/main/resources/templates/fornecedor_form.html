@@ -3,67 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Fornecedor</title>
+    <title>Fornecedores</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #1b1f2a;
+            color: #f4f4f4;
         }
-        form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+        header {
+            text-align: center;
+            padding: 15px;
+            background-color: #252b38;
+            color: #4fc3f7;
+            margin-bottom: 20px;
         }
-        form label {
-            display: block;
-            margin: 10px 0 5px;
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #252b38;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
         }
-        form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        table th, table td {
+            padding: 15px;
+            border-bottom: 1px solid #333;
         }
-        form button {
-            width: 100%;
-            padding: 10px;
+        table th {
             background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            color: #61dafb;
+            text-align: left;
+        }
+        table th.acao-header {
+            text-align: right;
+            padding-right: 50px;
+        }
+        .actions {
+            text-align: right;
+        }
+        .actions a {
+            margin-right: 10px;
+            color: #4fc3f7;
+            text-decoration: none;
+        }
+        .actions a:hover {
+            color: #29b6f6;
             cursor: pointer;
         }
-        form button:hover {
-            background-color: #555;
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #4fc3f7;
+            color: #1b1f2a;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: #29b6f6;
+        }
+        .delete-btn {
+            color: white;
+
+        }
+        .delete-btn:hover {
+            color: #29b6f6;
+            cursor: pointer;
+            
         }
     </style>
+    <script>
+        function confirmarExclusao() {
+            return confirm("Tem certeza que deseja excluir este fornecedor?");
+        }
+    </script>
 </head>
 <body>
-    <h2>Editar Fornecedor</h2>
-    <form action="/dashboard/fornecedores/editar" method="post">
-        <input type="hidden" id="id" name="id" th:value="${fornecedor.id}" />
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" th:value="${fornecedor.nome}" required />
-
-        <label for="cnpj">CNPJ:</label>
-        <input type="text" id="cnpj" name="cnpj" th:value="${fornecedor.cnpj}" required />
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:value="${fornecedor.email}" required />
-
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="telefone" th:value="${fornecedor.telefone}" />
-
-        <button type="submit">Confirmar</button>
-    </form>
+    <header>
+        <h1>Fornecedores</h1>
+    </header>
+    <div style="text-align: center;">
+        <a href="fornecedor_form" class="btn">Adicionar Fornecedor</a>
+        <a href="dashboard" class="btn">Voltar</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th class="acao-header">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="fornecedor : ${fornecedores}">
+                <td th:text="${fornecedor.id}"></td>
+                <td th:text="${fornecedor.nome}"></td>
+                <td th:text="${fornecedor.email}"></td>
+                <td th:text="${fornecedor.telefone}"></td>
+                <td class="actions">
+                    <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}">Editar</a>
+                    <a th:href="@{/fornecedores/deletar/{id}(id=${fornecedor.id})}" class="delete-btn" onclick="return confirmarExclusao()">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

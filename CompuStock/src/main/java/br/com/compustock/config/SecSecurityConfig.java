@@ -27,8 +27,8 @@ public class SecSecurityConfig {
 	 
 	    http.authorizeHttpRequests(
 	            auth -> auth.requestMatchers("/","/login","/static/imagens","/dashboard").permitAll()	            	         
-	            .requestMatchers("/dashboard","/dashboard/fornecedores","/dashboard/produtos").hasAuthority("funcionario")	      
-	            .requestMatchers("/dashboard/funcionarios/**","/dashboard").hasAuthority("administrador")		
+	            .requestMatchers("/dashboard","/dashboard/fornecedores","/produtos/**").hasAuthority("funcionario")	      
+	            .requestMatchers("/funcionarios/**","/dashboard").hasAuthority("administrador")		
 	            .anyRequest().authenticated()
 	           )
 	            .formLogin(formLogin -> formLogin	            		

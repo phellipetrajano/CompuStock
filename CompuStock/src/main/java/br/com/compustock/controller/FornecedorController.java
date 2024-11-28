@@ -8,46 +8,46 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 @Controller
-@RequestMapping("/dashboard/fornecedores")
+
 public class FornecedorController {
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
-    @GetMapping
+    @GetMapping("/fornecedores")
     public String listarFornecedores(Model model) {
         model.addAttribute("fornecedores", fornecedorRepository.findAll());
         return "fornecedores";
     }
 
-    @GetMapping("/novo")
+    @GetMapping("/fornecedores/novo")
     public String cadastrarFornecedor(Model model) {
         model.addAttribute("fornecedor", new Fornecedor());
         return "fornecedor_form";
     }
 
-    @PostMapping("/novo")
+    @PostMapping("/fornecedores/novo")
     public String salvarFornecedor(@ModelAttribute Fornecedor fornecedor) {
         fornecedorRepository.save(fornecedor);
-        return "redirect:/dashboard/fornecedores";
+        return "redirect:/fornecedores";
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/fornecedores/editar/{id}")
     public String editarFornecedor(@PathVariable Long id, Model model) {
         Fornecedor fornecedor = fornecedorRepository.findById(id).orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"));
         model.addAttribute("fornecedor", fornecedor);
-        return "fornecedor_form";
+        return "fornecedores_form";
     }
 
-    @PostMapping("/editar")
+    @PostMapping("/fornecedores/editar")
     public String atualizarFornecedor(@ModelAttribute Fornecedor fornecedor) {
         fornecedorRepository.save(fornecedor);
-        return "redirect:/dashboard/fornecedores";
+        return "redirect:/fornecedores";
     }
 
-    @GetMapping("/deletar/{id}")
+    @GetMapping("/fornecedores/deletar/{id}")
     public String deletarFornecedor(@PathVariable Long id) {
         fornecedorRepository.deleteById(id);
-        return "redirect:/dashboard/fornecedores";
+        return "redirect:/fornecedores";
     }
 }

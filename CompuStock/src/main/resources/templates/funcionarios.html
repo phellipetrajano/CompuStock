@@ -76,7 +76,7 @@
         <h1>Funcionários</h1>
     </header>
     <div style="text-align: center;">
-        <a href="/dashboard/funcionarios/novo" class="btn">Adicionar Funcionário</a>
+        <a href="/funcionarios/novo" class="btn">Adicionar Funcionário</a>
         <a href="/dashboard" class="btn">Voltar</a>
     </div>
     <table>
@@ -96,8 +96,8 @@
                 <td th:text="${funcionario.email}"></td>
                 <td th:text="${funcionario.telefone}"></td>
                 <td class="actions">
-                    <a th:href="@{/dashboard/funcionarios/editar/{id}(id=${funcionario.id})}">Editar</a>
-                    <a th:href="@{/dashboard/funcionarios/deletar/{id}(id=${funcionario.id})}" class="delete-btn" onclick="return confirmarExclusao()">Excluir</a>
+                    <a th:href="@{/funcionarios/editar/{id}(id=${funcionario.id})}">Editar</a>
+                    <a th:href="@{/funcionarios/deletar/{id}(id=${funcionario.id})}" class="delete-btn" onclick="return confirmarExclusao()">Excluir</a>
                 </td>
             </tr>
         </tbody>

@@ -9,48 +9,48 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 @Controller
-@RequestMapping("/dashboard/funcionarios")
+
 public class FuncionarioController {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    @GetMapping
+    @GetMapping ("/funcionarios")
     public String listarFuncionarios(Model model) {
         model.addAttribute("funcionarios", funcionarioRepository.findAll());
         return "funcionarios";
     }
 
-    @GetMapping("/novo")
+    @GetMapping("/funcionarios/novo")
     public String cadastrarFuncionario(Model model) {
         model.addAttribute("funcionario", new Funcionario()); // Para criar um novo objeto
         return "funcionario_form";
     }
 
-    @PostMapping("/novo")
+    @PostMapping("/funcionarios/novo")
     public String salvarFuncionario(@ModelAttribute Funcionario funcionario) {
         funcionarioRepository.save(funcionario);
-        return "redirect:/dashboard/funcionarios";
+        return "redirect:/funcionarios";
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/funcionarios/editar/{id}")
     public String editarFuncionario(@PathVariable Long id, Model model) {
         Funcionario funcionario = funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
         model.addAttribute("funcionario", funcionario);
         return "funcionario_form";
     }
 
-    @PostMapping("/editar")
+    @PostMapping("/funcionarios/editar")
     public String atualizarFuncionario(@ModelAttribute Funcionario funcionario) {
     	BCryptPasswordEncoder b = new BCryptPasswordEncoder();
     	funcionario.setSenha(b.encode(funcionario.getSenha()));
         funcionarioRepository.save(funcionario); // Atualiza diretamente
-        return "redirect:/dashboard/funcionarios";
+        return "redirect:/funcionarios_form";
     }
 
-    @GetMapping("/deletar/{id}")
+    @GetMapping("/funcionarios/deletar/{id}")
     public String deletarFuncionario(@PathVariable Long id) {
         funcionarioRepository.deleteById(id);
-        return "redirect:/dashboard/funcionarios";
+        return "redirect:/funcionarios";
     }
 }

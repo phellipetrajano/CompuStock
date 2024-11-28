@@ -49,7 +49,7 @@
 </head>
 <body>
     <h2>Editar Produto</h2>
-    <form action="/dashboard/produtos/editar" method="post">
+    <form action="/produtos/editar" method="post">
         <input type="hidden" id="id" name="id" th:value="${produto.id}" />
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" th:value="${produto.nome}" required />
