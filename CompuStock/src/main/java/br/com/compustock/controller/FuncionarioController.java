@@ -42,11 +42,12 @@ public class FuncionarioController {
 
     @PostMapping("/funcionarios/editar")
     public String atualizarFuncionario(@ModelAttribute Funcionario funcionario) {
-    	BCryptPasswordEncoder b = new BCryptPasswordEncoder();
-    	funcionario.setSenha(b.encode(funcionario.getSenha()));
+        BCryptPasswordEncoder b = new BCryptPasswordEncoder();
+        funcionario.setSenha(b.encode(funcionario.getSenha()));
         funcionarioRepository.save(funcionario); // Atualiza diretamente
-        return "redirect:/funcionarios_form";
+        return "redirect:/funcionarios"; // Redireciona para a lista de funcionários
     }
+    
 
     @GetMapping("/funcionarios/deletar/{id}")
     public String deletarFuncionario(@PathVariable Long id) {

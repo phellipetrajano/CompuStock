@@ -1,89 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fornecedores</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #1b1f2a;
-            color: #f4f4f4;
-        }
-        header {
-            text-align: center;
-            padding: 15px;
-            background-color: #252b38;
-            color: #61dafb;
-            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #e8f0fe;
         }
         table {
-            width: 90%;
-            margin: 20px auto;
+            width: 100%;
             border-collapse: collapse;
-            background-color: #252b38;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
+            margin-top: 20px;
         }
-        table th, table td {
-            padding: 15px;
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
             text-align: left;
-            border-bottom: 1px solid #333;
         }
-        table th {
-            background-color: #333;
-            color: #61dafb;
-        }
-        .actions a {
-            margin-right: 10px;
-            color: #61dafb;
-            text-decoration: none;
-        }
-        .actions a:hover {
-            color: #41a1d1;
-        }
-        .btn {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: #61dafb;
-            color: #1b1f2a;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .btn:hover {
-            background-color: #41a1d1;
-        }
-        .delete-btn {
-            background-color: #ff4d4d;
+        th {
+            background-color: #0073e6;
             color: white;
         }
-        .delete-btn:hover {
-            background-color: #cc0000;
+        .add-btn {
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #0073e6;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .edit-btn, .delete-btn {
+            color: #0073e6;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .delete-btn {
+            color: red;
         }
     </style>
     <script>
         function confirmarExclusao() {
-            return confirm("Tem certeza que deseja excluir este fornecedor?");
+            return confirm("Você tem certeza que deseja excluir este fornecedor?");
         }
     </script>
 </head>
 <body>
-    <header>
-        <h1>Fornecedores</h1>
-    </header>
-    <div style="text-align: center;">
-        <a href="/fornecedores/novo" class="btn">Adicionar Fornecedor</a>
-        <a href="/dashboard" class="btn">Voltar</a>
-    </div>
+    <h2>Lista de Fornecedores</h2>
+    <a href="/fornecedores/novo" class="add-btn">Adicionar Fornecedor</a>
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
+                <th>CNPJ</th>
                 <th>Email</th>
                 <th>Telefone</th>
                 <th>Ações</th>
@@ -91,13 +63,13 @@
         </thead>
         <tbody>
             <tr th:each="fornecedor : ${fornecedores}">
-                <td th:text="${fornecedor.id}"></td>
                 <td th:text="${fornecedor.nome}"></td>
+                <td th:text="${fornecedor.cnpj}"></td>
                 <td th:text="${fornecedor.email}"></td>
                 <td th:text="${fornecedor.telefone}"></td>
-                <td class="actions">
-                    <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}">Editar</a>
-                    <a th:href="@{/fornecedores/deletar/{id}(id=${fornecedor.id})}" class="delete-btn" onclick="return confirmarExclusao()">Excluir</a>
+                <td>
+                    <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}" class="edit-btn">Editar</a>
+                    <a th:href="@{/fornecedores/deletar/{id}(id=${fornecedor.id})}" class="delete-btn" onclick="return confirmarExclusao();">Deletar</a>
                 </td>
             </tr>
         </tbody>

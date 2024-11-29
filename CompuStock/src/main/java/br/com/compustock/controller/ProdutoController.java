@@ -37,12 +37,13 @@ public class ProdutoController {
         return "redirect:/produtos";
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/produtos/editar/{id}")
     public String editarProduto(@PathVariable Long id, Model model) {
         Produto produto = produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
         model.addAttribute("produto", produto);
         model.addAttribute("fornecedores", fornecedorRepository.findAll());
-        return "produto_form";
+        return "produto_form"; // Nome do template HTML para o formulário de edição
+    
     }
 
     @PostMapping("/produtos/editar")

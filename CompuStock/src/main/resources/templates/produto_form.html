@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Produto</title>
+    <title th:text="${#strings.isEmpty(produto.id) ? 'Cadastrar Produto' : 'Editar Produto'}"></title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,8 +48,8 @@
     </style>
 </head>
 <body>
-    <h2>Editar Produto</h2>
-    <form action="/produtos/editar" method="post">
+    <h2 th:text="${#strings.isEmpty(produto.id) ? 'Cadastrar Produto' : 'Editar Produto'}"></h2>
+    <form th:action="@{/produtos/editar}" method="post">
         <input type="hidden" id="id" name="id" th:value="${produto.id}" />
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" th:value="${produto.nome}" required />
@@ -69,8 +69,10 @@
         <label for="fornecedor_id">Fornecedor:</label>
         <select id="fornecedor_id" name="fornecedor_id" required>
             <option value="">Selecione o Fornecedor</option>
-            <option th:each="fornecedor : ${fornecedores}" th:value="${fornecedor.id}" th:text="${fornecedor.nome}" 
-                th:selected="${produto.fornecedor != null && fornecedor.id == produto.fornecedor.id}"></option>
+            <option th:each="fornecedor : ${fornecedores}" 
+                    th:value="${fornecedor.id}" 
+                    th:text="${fornecedor.nome}" 
+                    th:selected="${produto.fornecedor != null && fornecedor.id == produto.fornecedor.id}"></option>
         </select>
 
         <button type="submit">Confirmar</button>

@@ -26,9 +26,17 @@ public class SecSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	 
 	    http.authorizeHttpRequests(
-	            auth -> auth.requestMatchers("/","/login","/static/imagens","/dashboard","/funcionarios/**","/dashboard","fornecedores/**","/produtos/**","produto/**","funcionario/**","/fornecedor/**").permitAll()	            	         
-		
-	            .anyRequest().authenticated()
+	            auth -> auth.requestMatchers("/","/login","/static/imagens","/dashboard").permitAll()  // Permitir acesso a todos
+	            
+	            // Permitir que o administrador tenha acesso total
+	            .requestMatchers("/dashboard/funcionarios/**").hasAuthority("administrador") // Acesso total para administradores
+	            .requestMatchers("/dashboard/fornecedores/**","/dashboard/fornecedores/novo", "/dashboard/fornecedores/editar/**", "/dashboard/fornecedores/deletar/**").hasAuthority("administrador") // Acesso total para administradores
+	            .requestMatchers("/dashboard/produtos/**").hasAuthority("administrador") // Acesso total para administradores
+	            
+	            // Restringir acesso do funcionário
+	            .requestMatchers("/dashboard/funcionarios/novo", "/dashboard/funcionarios/editar/**").hasAuthority("administrador") // Apenas administradores podem cadastrar ou editar funcionários
+	            
+	            .anyRequest().authenticated() // Qualquer outra requisição deve ser autenticada
 	           )
 	            .formLogin(formLogin -> formLogin	            		
 	                    .defaultSuccessUrl("/dashboard", true)
@@ -38,22 +46,15 @@ public class SecSecurityConfig {
 	            .rememberMe(rememberMe -> rememberMe.key("AbcdEfghIjkl..."))
 	            .logout(logout -> logout.logoutUrl("/signout").permitAll());
 	 
-	 
 	    return http.build();
 	}
+
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth)
-	  throws Exception {
-		//Serve de exemplo para gerar um senha criptografada
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		// Serve de exemplo para gerar uma senha criptografada
 		BCryptPasswordEncoder b = new BCryptPasswordEncoder();
 		System.out.println(b.encode("123456"));
-		//Cripitografa a senha para salvar no banco de dados
+		// Criptografa a senha para salvar no banco de dados
 		auth.userDetailsService(userDetailServiceImpl).passwordEncoder(new BCryptPasswordEncoder());
-	 
-	    
-	  
 	}
-
-
-
 }
