@@ -4,48 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${#strings.isEmpty(funcionario.id) ? 'Cadastrar Funcionário' : 'Editar Funcionário'}"></title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        form label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        form button:hover {
-            background-color: #555;
-        }
-    </style>
+	
+	<style> 
+	body {
+	          font-family: Arial, sans-serif;
+	          margin: 0;
+	          padding: 0;
+	          background-color: #f4f4f4;
+	          background-color: #1b1f2a;
+	          display: flex;
+	          justify-content: center;
+	          align-items: center;
+	          height: 100vh;
+	          flex-direction: column;
+	          
+	      }
+	      h2 {
+	          margin-bottom: 20px;
+	          color: #61dafb;
+	      }
+	      
+	      form {
+	          background-color: white;
+	          padding: 20px;
+	          border-radius: 5px;
+	          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	          width: 300px;
+	          border-radius: 10px;
+	          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	          width: 400px;
+	      }
+	      form label {
+	          display: block;
+	          margin: 10px 0 5px;
+	      }
+	      form input {
+	          width: 100%;
+	          padding: 10px;
+	          padding: 3px;
+	          margin-bottom: 15px;
+	          border: 1px solid #ddd;
+	          border-radius: 5px;
+	          border-radius: 10px;
+	      }
+		  button:hover, .btn:hover {
+		  		      opacity: 0.8;}
+		  			  
+		  			  form button {
+		  			              width: 100%;
+		  			              padding: 10px;
+		  			              background-color: rgb(0, 255, 64);
+		  			              color: white;
+		  			              border: none;
+		  			              border-radius: 5px;}
+		  			          
+		  			          .btn {
+								 font-size: small;
+								 font-family: Arial, sans-serif;
+							     color: white;
+							     border: none;
+						         text-decoration: none;
+							  }
+							  div{ 
+								text-align: center;
+								border-radius: 5px;
+								width: 95%;
+								padding: 10px;
+							    background-color: rgb(45, 138, 183); 
+								margin-top: 10px; 
+							
+							   
+
+							  }
+
+		  </style>
 </head>
 <body>
     <h2 th:text="${#strings.isEmpty(funcionario.id) ? 'Cadastrar Funcionário' : 'Editar Funcionário'}"></h2>
@@ -63,7 +95,8 @@
         <label for="senha">Senha:</label>
         <input type="password" id="senha" name="senha" th:value="${funcionario.senha}" required />
 
-        <button type="submit">Confirmar</button>
+		<button  type="submit">CONFIRMAR</button>
+	   <div> <a href="/funcionarios" class="btn">VOLTAR</a></div>
     </form>
 </body>
 </html>

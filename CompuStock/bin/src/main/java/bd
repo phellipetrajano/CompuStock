@@ -1,0 +1,81 @@
+CREATE DATABASE compustock;
+
+USE compustock;
+
+-- Tabela de Funcionários
+CREATE TABLE funcionario (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    telefone VARCHAR(15),
+    senha VARCHAR(255) NOT NULL -- Lembre-se de armazenar senhas de forma segura (hash)
+);
+
+-- Tabela de Fornecedores
+CREATE TABLE fornecedor (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    telefone VARCHAR(15),
+    funcionario_id BIGINT, -- Chave estrangeira para funcionário
+    FOREIGN KEY (funcionario_id) REFERENCES funcionario(id) ON DELETE SET NULL
+);
+
+-- Tabela de Permissões
+CREATE TABLE permissao (
+    idpermissao BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- Tabela de Produtos
+CREATE TABLE produto (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    marca VARCHAR(255),
+    preco DOUBLE NOT NULL,
+    estoque INT NOT NULL,
+    descricao TEXT,
+    fornecedor_id BIGINT,
+    funcionario_id BIGINT, -- Chave estrangeira para funcionário
+    FOREIGN KEY (fornecedor_id) REFERENCES fornecedor(id) ON DELETE SET NULL,
+    FOREIGN KEY (funcionario_id) REFERENCES funcionario(id) ON DELETE SET NULL
+);
+
+-- Tabela de Relação entre Funcionários e Permissões
+CREATE TABLE funcionario_permissao (
+    idfuncionariopermissao BIGINT,
+    idpermissao BIGINT,
+    PRIMARY KEY (idfuncionariopermissao, idpermissao),
+    FOREIGN KEY (idfuncionariopermissao) REFERENCES funcionario(id) ON DELETE CASCADE,
+    FOREIGN KEY (idpermissao) REFERENCES permissao(idpermissao) ON DELETE CASCADE
+);
+
+-- Inserindo Funcionários
+INSERT INTO funcionario (nome, email, telefone, senha) VALUES
+('João Silva', 'joao.silva@email.com', '123456789', 'senha123'),
+('Maria Oliveira', 'maria.oliveira@email.com', '987654321', 'senha456'),
+('Carlos Pereira', 'carlos.pereira@email.com', '456789123', 'senha789');
+
+-- Inserindo Fornecedores
+INSERT INTO fornecedor (nome, cnpj, email, telefone, funcionario_id) VALUES
+('Fornecedor A', '12345678000195', 'contato@fornecedora.com', '111222333', 1),  -- Responsável: João Silva
+('Fornecedor B', '23456789000196', 'contato@fornecedorb.com', '444555666', 2),  -- Responsável: Maria Oliveira
+('Fornecedor C', '34567890000197', 'contato@fornecedorc.com', '777888999', NULL);  -- Sem responsável
+
+-- Inserindo Permissões
+INSERT INTO permissao (nome) VALUES
+('administrador'),
+('funcionario');
+
+-- Inserindo Produtos
+INSERT INTO produto (nome, marca, preco, estoque, descricao, fornecedor_id, funcionario_id) VALUES
+('Produto 1', 'Marca A', 10.99, 100, 'Descrição do Produto 1', 1, 1),  -- Fornecedor A, Responsável: João Silva
+('Produto 2', 'Marca B', 20.50, 50, 'Descrição do Produto 2', 2, 2),  -- Fornecedor B, Responsável: Maria Oliveira
+('Produto 3', 'Marca C', 15.75, 200, 'Descrição do Produto 3', NULL, 1);  -- Sem fornecedor, Responsável: João Silva
+
+-- Inserindo Relação entre Funcionários e Permissões
+INSERT INTO funcionario_permissao (idfuncionariopermissao, idpermissao) VALUES
+(1, 1),  -- João Silva é Administrador
+(2, 2),  -- Maria Oliveira é Funcionário
+(3, 2);  -- Carlos Pereira é Funcionário

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fornecedores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #e8f0fe;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #0073e6;
+            color: white;
+        }
+        .add-btn {
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #0073e6;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .edit-btn, .delete-btn {
+            color: #0073e6;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .delete-btn {
+            color: red;
+        }
+    </style>
+    <script>
+        function confirmarExclusao() {
+            return confirm("Você tem certeza que deseja excluir este fornecedor?");
+        }
+    </script>
+</head>
+<body>
+    <h2>Lista de Fornecedores</h2>
+    <a href="/fornecedores/novo" class="add-btn">Adicionar Fornecedor</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="fornecedor : ${fornecedores}">
+                <td th:text="${fornecedor.nome}"></td>
+                <td th:text="${fornecedor.cnpj}"></td>
+                <td th:text="${fornecedor.email}"></td>
+                <td th:text="${fornecedor.telefone}"></td>
+                <td>
+                    <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}" class="edit-btn">Editar</a>
+                    <a th:href="@{/fornecedores/deletar/{id}(id=${fornecedor.id})}" class="delete-btn" onclick="return confirmarExclusao();">Deletar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

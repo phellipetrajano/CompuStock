@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1b1f2a;
+            color: #f4f4f4;
+        }
+        header {
+            text-align: center;
+            padding: 15px;
+            background-color: #252b38;
+            color: #61dafb;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #252b38;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        table th {
+            background-color: #333;
+            color: #61dafb;
+        }
+        .actions a {
+            margin-right: 10px;
+            color: #61dafb;
+            text-decoration: none;
+        }
+        .actions a:hover {
+            color: #41a1d1;
+        }
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #61dafb;
+            color: #1b1f2a;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: #41a1d1;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+    <script>
+        function confirmarExclusao() {
+            return confirm("Tem certeza que deseja excluir este produto?");
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Produtos</h1>
+    </header>
+    <div style="text-align: center;">
+        <a href="/produtos/novo" class="btn">Adicionar Produto</a>
+        <a href="/dashboard" class="btn">Voltar</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Marca</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.id}"></td>
+                <td th:text="${produto.nome}"></td>
+                <td th:text="${produto.marca}"></td>
+                <td th:text="${produto.preco}"></td>
+                <td th:text="${produto.estoque}"></td>
+                <td class="actions">
+                    <a th:href="@{/produtos/editar/{id}(id=${produto.id})}">Editar</a>
+                    <a th:href="@{/produtos/deletar/{id}(id=${produto.id})}" class="delete-btn" onclick="return confirmarExclusao()">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
