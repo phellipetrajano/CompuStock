@@ -21,7 +21,7 @@
             margin-bottom: 20px;
             color: #61dafb;
         }
-        
+
         form {
             background-color: white;
             padding: 20px;
@@ -29,10 +29,12 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             width: 400px;
         }
+
         form label {
             display: block;
             margin: 10px 0 5px;
         }
+
         form input {
             width: 100%;
             padding: 3px;
@@ -40,36 +42,31 @@
             border: 1px solid #ddd;
             border-radius: 10px;
         }
-		.btn {
-				 font-size: small;
-				 font-family: Arial, sans-serif;
-				 color: white;
-			     border: none;
-				 text-decoration: none;
-								  }
+
         form button {
             width: 100%;
             padding: 10px;
-            background-color:  rgb(0, 255, 64);
+            background-color: rgb(0, 255, 64);
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-		div{ 
-			text-align: center;
-		    border-radius: 5px;
-			width: 95%;
-			padding: 10px;
-		    background-color: rgb(45, 138, 183); 
-            margin-top: 10px; }
-									
-		button:hover, .btn:hover {
-				  			      opacity: 0.8;
+
+        form button:hover {
+            background-color: #555;
         }
-        .btn {
-            background-color: rgb(45, 138, 183); 
+
+        .btn-voltar {
+            background-color: rgb(45, 138, 183);
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
             margin-top: 10px;
+            width: 100%;
+            text-align: center;
         }
     </style>
     <script>
@@ -102,7 +99,7 @@
 </head>
 <body>
     <h2 th:text="${fornecedor.id != null} ? 'Editar Fornecedor' : 'Adicionar Fornecedor'"></h2>
-    <form th:action="${fornecedor.id != null} ? @{/fornecedores/editar/${fornecedor.id}} : @{/fornecedores/novo}" method="post">
+    <form th:action="@{${fornecedor.id != null} ? '/fornecedores/editar/' + ${fornecedor.id} : '/fornecedores/novo'}" method="post">
         <input type="hidden" id="id" name="id" th:value="${fornecedor.id}" />
         
         <label for="nome">Nome:</label>
@@ -114,15 +111,15 @@
                maxlength="18" oninput="aplicarFormatoCNPJ()" />
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:value="${fornecedor.email		}" required />
+        <input type="email" id="email" name="email" th:value="${fornecedor.email}" required />
 
-		        <label for="telefone">Telefone:</label>
-		        <input type="text" id="telefone" name="telefone" th:value="${fornecedor.telefone}" 
-		               placeholder="(00) 00000-0000" 
-		               maxlength="15" oninput="aplicarFormatoTelefone()" />
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone" th:value="${fornecedor.telefone}" 
+               placeholder="(00) 00000-0000" 
+               maxlength="15" oninput="aplicarFormatoTelefone()" />
 
-					   <button  type="submit">CONFIRMAR</button>
-					 <div>  <a href="/fornecedores" class="btn">VOLTAR</a></div>
-		    </form>
-		</body>
-		</html>
+        <button type="submit">Confirmar</button>
+        <a href="/fornecedores" class="btn-voltar">Voltar</a>
+    </form>
+</body>
+</html>

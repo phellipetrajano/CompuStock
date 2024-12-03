@@ -13,48 +13,51 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecSecurityConfig {
-	
-	@Autowired	
-	private UserDetailServiceImpl userDetailServiceImpl;
-	
-	@Bean 
-	public PasswordEncoder passwordEncoder() { 
-	    return new BCryptPasswordEncoder(); 
-	}
+    
+    @Autowired    
+    private UserDetailServiceImpl userDetailServiceImpl;
+    
+    @Bean 
+    public PasswordEncoder passwordEncoder() { 
+        return new BCryptPasswordEncoder(); 
+    }
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-	 
-	    http.authorizeHttpRequests(
-	            auth -> auth.requestMatchers("/","/login","/static/imagens","/dashboard").permitAll()  // Permitir acesso a todos
-	            
-	            // Permitir que o administrador tenha acesso total
-	            .requestMatchers("/dashboard/funcionarios/**").hasAuthority("administrador") // Acesso total para administradores
-	            .requestMatchers("/dashboard/fornecedores/**","/dashboard/fornecedores/novo", "/dashboard/fornecedores/editar/**", "/dashboard/fornecedores/deletar/**").hasAuthority("administrador") // Acesso total para administradores
-	            .requestMatchers("/dashboard/produtos/**").hasAuthority("administrador") // Acesso total para administradores
-	            
-	            // Restringir acesso do funcionário
-	            .requestMatchers("/dashboard/funcionarios/novo", "/dashboard/funcionarios/editar/**").hasAuthority("administrador") // Apenas administradores podem cadastrar ou editar funcionários
-	            
-	            .anyRequest().authenticated() // Qualquer outra requisição deve ser autenticada
-	           )
-	            .formLogin(formLogin -> formLogin	            		
-	                    .defaultSuccessUrl("/dashboard", true)
-	                    .loginPage("/login")
-	                    .permitAll()
-	            )
-	            .rememberMe(rememberMe -> rememberMe.key("AbcdEfghIjkl..."))
-	            .logout(logout -> logout.logoutUrl("/signout").permitAll());
-	 
-	    return http.build();
-	}
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    
+        http.authorizeHttpRequests(auth -> auth
+                // Permitir acesso a todos
+                .requestMatchers("/", "/login", "/static/imagens", "/dashboard").permitAll()
+               
+                // Permissões do administrador (tem acesso total)
+                .requestMatchers("/dashboard/funcionarios/**", "/dashboard/fornecedores/**", "/dashboard/produtos/**").hasAuthority("administrador")
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		// Serve de exemplo para gerar uma senha criptografada
-		BCryptPasswordEncoder b = new BCryptPasswordEncoder();
-		System.out.println(b.encode("123456"));
-		// Criptografa a senha para salvar no banco de dados
-		auth.userDetailsService(userDetailServiceImpl).passwordEncoder(new BCryptPasswordEncoder());
-	}
+                // Permissões do funcionário (acesso a produtos e fornecedores apenas)
+                .requestMatchers("/dashboard/produtos/**", "/dashboard/fornecedores/**", "/dashboard/fornecedores/novo", "/dashboard/fornecedores/editar/**", "/dashboard/fornecedores/deletar/**")
+                .hasAnyAuthority("funcionario", "administrador")
+
+                // Bloquear acesso de funcionários a páginas de administração
+                .requestMatchers("/dashboard/funcionarios/**").hasAuthority("administrador")
+
+                // Qualquer outra requisição deve ser autenticada
+                .anyRequest().authenticated()
+            )
+            .formLogin(formLogin -> formLogin
+                    .defaultSuccessUrl("/dashboard", true)
+                    .loginPage("/login")
+                    .permitAll()
+            )
+            .rememberMe(rememberMe -> rememberMe.key("AbcdEfghIjkl..."))
+            .logout(logout -> logout.logoutUrl("/signout").permitAll());
+
+        return http.build();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        BCryptPasswordEncoder b = new BCryptPasswordEncoder();
+        System.out.println(b.encode("123456"));
+        // Criptografa a senha para salvar no banco de dados
+        auth.userDetailsService(userDetailServiceImpl).passwordEncoder(new BCryptPasswordEncoder());
+    }
 }
